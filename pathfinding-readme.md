@@ -4,7 +4,7 @@ An interactive web-based application that visualizes and compares different path
 
 ## 🚀 Live Demo
 
-**[View Live Application](https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/fd2a82ebc9e782a8c69638ae85fd0c8f/659f029b-b258-4a60-ba3f-4675877d1390/index.html)**
+**[View Live Application]()**
 
 ## 📋 Table of Contents
 
