@@ -87,7 +87,7 @@ An interactive web-based application that visualizes and compares different path
 ## 🛠️ Installation
 
 ### Option 1: Direct Access
-Visit the live demo at: [Pathfinding Visualizer](https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/fd2a82ebc9e782a8c69638ae85fd0c8f/659f029b-b258-4a60-ba3f-4675877d1390/index.html)
+Visit the live demo at: [Pathfinding Visualizer](https://heligitgenius.github.io/AI-Path-Finding-Visualizer/)
 
 ### Option 2: Local Development
 1. **Clone or download** the project files
