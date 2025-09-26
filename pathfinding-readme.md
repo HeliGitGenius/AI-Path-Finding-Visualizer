@@ -4,7 +4,7 @@ An interactive web-based application that visualizes and compares different path
 
 ## 🚀 Live Demo
 
-**[View Live Application]()**
+**[View Live Application](https://heligitgenius.github.io/AI-Path-Finding-Visualizer/)**
 
 ## 📋 Table of Contents
 
