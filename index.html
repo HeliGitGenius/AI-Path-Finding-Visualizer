@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Pathfinding Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1>AI Pathfinding Visualizer</h1>
+            <p>Interactive demonstration of BFS, Dijkstra's Algorithm, and A* Search</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Algorithm Selection</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="form-group">
+                            <label class="form-label">Choose Algorithm:</label>
+                            <select id="algorithmSelect" class="form-control">
+                                <option value="bfs">Breadth-First Search (BFS)</option>
+                                <option value="dijkstra">Dijkstra's Algorithm</option>
+                                <option value="astar">A* Search</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" id="heuristicGroup" style="display: none;">
+                            <label class="form-label">Heuristic Function:</label>
+                            <select id="heuristicSelect" class="form-control">
+                                <option value="manhattan">Manhattan Distance</option>
+                                <option value="euclidean">Euclidean Distance</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Animation Speed:</label>
+                            <select id="speedSelect" class="form-control">
+                                <option value="slow">Slow</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="fast">Fast</option>
+                                <option value="instant">Instant</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Grid Size:</label>
+                            <select id="gridSizeSelect" class="form-control">
+                                <option value="15">Small (15x15)</option>
+                                <option value="25" selected>Medium (25x25)</option>
+                                <option value="35">Large (35x35)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Controls</h3>
+                    </div>
+                    <div class="card__body">
+                        <button id="startBtn" class="btn btn--primary btn--full-width">Start Visualization</button>
+                        <button id="pauseBtn" class="btn btn--secondary btn--full-width" disabled>Pause</button>
+                        <button id="resetBtn" class="btn btn--outline btn--full-width">Reset Grid</button>
+                        <button id="clearBtn" class="btn btn--outline btn--full-width">Clear Path</button>
+                    </div>
+                </div>
+
+                <!-- Maze Generation -->
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Maze Generation</h3>
+                    </div>
+                    <div class="card__body">
+                        <button id="generateMazeBtn" class="btn btn--secondary btn--full-width">Generate Random Maze</button>
+                        <button id="generateObstaclesBtn" class="btn btn--secondary btn--full-width">Random Obstacles</button>
+                    </div>
+                </div>
+
+                <!-- Performance Metrics -->
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Performance Metrics</h3>
+                    </div>
+                    <div class="card__body">
+                        <div class="metric">
+                            <span class="metric-label">Algorithm:</span>
+                            <span id="currentAlgorithm" class="metric-value">None</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Path Length:</span>
+                            <span id="pathLength" class="metric-value">0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Nodes Explored:</span>
+                            <span id="nodesExplored" class="metric-value">0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Execution Time:</span>
+                            <span id="executionTime" class="metric-value">0ms</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Status:</span>
+                            <span id="algorithmStatus" class="status status--info">Ready</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instructions -->
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Instructions</h3>
+                    </div>
+                    <div class="card__body">
+                        <ul class="instruction-list">
+                            <li><strong>Left Click:</strong> Draw/Remove walls</li>
+                            <li><strong>Right Click:</strong> Place start point</li>
+                            <li><strong>Ctrl + Click:</strong> Place end point</li>
+                            <li><strong>Drag:</strong> Draw multiple walls</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid Container -->
+            <div class="grid-container">
+                <div class="grid-header">
+                    <h3>Pathfinding Grid</h3>
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #27ae60;"></div>
+                            <span>Start</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #e74c3c;"></div>
+                            <span>End</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #2c3e50;"></div>
+                            <span>Wall</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #3498db;"></div>
+                            <span>Visited</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #f1c40f;"></div>
+                            <span>Path</span>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="gridCanvas" width="750" height="750"></canvas>
+            </div>
+
+            <!-- Algorithm Information Panel -->
+            <div class="info-panel">
+                <div class="card">
+                    <div class="card__header">
+                        <h3 id="infoTitle">Algorithm Information</h3>
+                    </div>
+                    <div class="card__body">
+                        <div id="algorithmInfo">
+                            <p>Select an algorithm to see detailed information about how it works, its complexity, and real-world applications.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
